@@ -1,0 +1,59 @@
+@import url("https://api.fontshare.com/v2/css?f[]=clash-display@600,700&f[]=general-sans@300,400,500,600&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-clash: "Clash Display", sans-serif;
+    --font-general: "General Sans", sans-serif;
+  }
+
+  * {
+    scroll-behavior: smooth;
+    cursor: none !important; /* Enforce custom cursor globally */
+  }
+
+  html,
+  body {
+    background-color: #03050C;
+    color: #ffffff;
+    overflow-x: hidden;
+  }
+
+  body {
+    font-family: var(--font-general);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-clash);
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer utilities {
+  .font-heading {
+    font-family: var(--font-clash);
+  }
+  .font-body {
+    font-family: var(--font-general);
+  }
+  .text-gradient {
+    background: linear-gradient(90deg, #ffffff 0%, #8B5CF6 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #03050C;
+}
+::-webkit-scrollbar-thumb {
+  background: #4338CA;
+  border-radius: 999px;
+}

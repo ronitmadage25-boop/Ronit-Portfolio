@@ -17,22 +17,40 @@ export async function POST(request: Request) {
       );
     }
 
+    // Check if required environment variables exist
+    if (!process.env.MONGODB_URI) {
+      console.error("MONGODB_URI is not configured");
+      return NextResponse.json(
+        { error: "Server configuration error. Please try again later." },
+        { status: 500 }
+      );
+    }
+
+    if (!process.env.RESEND_API_KEY) {
+      console.error("RESEND_API_KEY is not configured");
+      return NextResponse.json(
+        { error: "Email service configuration error. Please try again later." },
+        { status: 500 }
+      );
+    }
+
     // 1. Save the message to MongoDB Atlas
-    await dbConnect();
-
-    const contact = await Contact.create({
-      name,
-      email,
-      subject,
-      message,
-    });
-
-    // 2. Send Email Notification using Resend
     try {
-      const timestamp = new Date(contact.createdAt).toLocaleString();
+      await dbConnect();
       
-      await resend.emails.send({
-        from: "Portfolio Contact <onboarding@resend.dev>",
+      const contact = await Contact.create({
+        name,
+        email,
+        subject,
+        message,
+      });
+
+      // 2. Send Email Notification using Resend
+      try {
+        const timestamp = new Date(contact.createdAt).toLocaleString();
+        
+        await resend.emails.send({
+          from: "Portfolio Contact <onboarding@resend.dev>",
         to: "ronitmadage@gmail.com",
         subject: `New Portfolio Message: ${subject}`,
         html: `
@@ -45,23 +63,32 @@ export async function POST(request: Request) {
           <p><strong>Message:</strong></p>
           <p style="white-space: pre-wrap;">${message}</p>
         `,
-      });
-    } catch (emailError) {
-      console.error("Resend Email Error:", emailError);
-      // We continue since MongoDB was successful, but log the email error.
-    }
-
-    return NextResponse.json({ success: true, data: contact }, { status: 201 });
-  } catch (error: any) {
-    console.error("API Error - Contact Form:", error);
-    if (error.name === "ValidationError") {
+        });
+        
+        return NextResponse.json({ success: true, data: contact }, { status: 201 });
+        
+      } catch (emailError) {
+        console.error("Email sending failed:", emailError);
+        // Still return success since database save worked
+        return NextResponse.json({ 
+          success: true, 
+          data: contact,
+          warning: "Message saved but email notification failed" 
+        }, { status: 201 });
+      }
+      
+    } catch (dbError) {
+      console.error("Database error:", dbError);
       return NextResponse.json(
-        { error: "Validation Error: Please check your inputs." },
-        { status: 400 }
+        { error: "Failed to save message. Please try again." },
+        { status: 500 }
       );
     }
+
+  } catch (error: any) {
+    console.error("Contact API Error:", error);
     return NextResponse.json(
-      { error: "Server Error: Unable to send message." },
+      { error: "Unable to send message. Please try again later." },
       { status: 500 }
     );
   }

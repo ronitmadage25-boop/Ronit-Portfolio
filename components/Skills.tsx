@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 
 const clusters = [
-  { id: "ai", label: "AI / ML", skills: ["Python", "TensorFlow", "Scikit-Learn", "Prompt Engineering"], color: "from-purple-500 to-indigo-500", glow: "shadow-purple-500/50" },
+  { id: "ai", label: "AI / ML", skills: ["Python", "TensorFlow", "Scikit-Learn"], color: "from-purple-500 to-indigo-500", glow: "shadow-purple-500/50" },
   { id: "frontend", label: "Frontend", skills: ["React", "Next.js", "TypeScript", "Tailwind CSS"], color: "from-cyan-400 to-blue-500", glow: "shadow-cyan-400/50" },
   { id: "backend", label: "Backend", skills: ["Node.js", "Express", "PHP", "Java"], color: "from-emerald-400 to-teal-500", glow: "shadow-emerald-400/50" },
   { id: "database", label: "Database", skills: ["MySQL", "PostgreSQL", "MongoDB", "SQLite"], color: "from-amber-400 to-orange-500", glow: "shadow-amber-400/50" },

@@ -135,31 +135,6 @@ export default function Projects() {
   return (
     <section id="projects" className="relative w-full py-24" style={{ perspective: "2000px" }}>
       <div className="mx-auto max-w-7xl px-6 md:px-12">
-        <div className="mb-16">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-20%" }}
-            className="mb-4 inline-flex items-center gap-3 rounded-full border border-[#8B5CF6]/30 bg-[#8B5CF6]/10 px-4 py-2"
-          >
-            <span className="h-2 w-2 animate-pulse rounded-full bg-[#8B5CF6]" />
-            <span className="font-mono text-xs tracking-widest text-[#8B5CF6] uppercase">
-              Showcase
-            </span>
-          </motion.div>
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-20%" }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="font-heading text-4xl font-bold leading-tight text-white sm:text-6xl"
-          >
-            Digital Ecosystems
-            <br />
-            <span className="text-white/40">Compact, Intelligent.</span>
-          </motion.h2>
-        </div>
-
         {/* 3-Column Grid Layout */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((p, i) => (

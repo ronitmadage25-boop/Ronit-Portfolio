@@ -42,7 +42,7 @@ export default function Hero() {
         loop
         playsInline
       >
-        <source src="/models/5539-184226951.mp4" type="video/mp4" />
+        <source src="/models/270448_medium.mp4" type="video/mp4" />
       </motion.video>
 
       {/* Animated Dark Overlay */}
@@ -70,7 +70,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: -30, scale: 0.8 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ delay: 0.3, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-8 flex items-center gap-4"
+          className="mb-6 flex items-center gap-3"
         >
           <motion.div 
             animate={{ 
@@ -81,14 +81,14 @@ export default function Hero() {
               ]
             }}
             transition={{ duration: 2, repeat: Infinity }}
-            className="inline-flex items-center gap-2 rounded-full border-2 border-emerald-500/40 bg-emerald-500/20 backdrop-blur-md px-5 py-2.5"
+            className="inline-flex items-center gap-2 rounded-full border-2 border-emerald-500/40 bg-emerald-500/20 backdrop-blur-md px-4 py-2"
           >
             <motion.span 
               animate={{ scale: [1, 1.2, 1] }}
               transition={{ duration: 2, repeat: Infinity }}
-              className="h-3 w-3 rounded-full bg-emerald-400" 
+              className="h-2.5 w-2.5 rounded-full bg-emerald-400" 
             />
-            <span className="font-mono text-xs tracking-[0.25em] text-emerald-300 uppercase font-bold">
+            <span className="font-mono text-[10px] tracking-[0.2em] text-emerald-300 uppercase font-bold">
               Available For Internships
             </span>
           </motion.div>
@@ -96,7 +96,7 @@ export default function Hero() {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.8, duration: 1 }}
-            className="font-mono text-base tracking-[0.3em] text-cyan-400 uppercase hidden sm:inline-block"
+            className="font-mono text-sm tracking-[0.25em] text-cyan-400 uppercase hidden sm:inline-block"
           >
             / System V2.0
           </motion.span>
@@ -107,7 +107,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 60, scale: 0.9 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ delay: 0.5, duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-          className="font-heading text-[18vw] sm:text-[15vw] md:text-[12vw] lg:text-[10vw] leading-[0.8] font-black tracking-tighter text-white mb-8"
+          className="font-heading text-[14vw] sm:text-[11vw] md:text-[9vw] lg:text-[7.5vw] leading-[0.85] font-black tracking-tighter text-white mb-6"
         >
           <motion.span
             animate={{ 
@@ -154,7 +154,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.2, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          className="max-w-3xl text-xl sm:text-2xl md:text-3xl font-light leading-relaxed text-white/80 mb-12"
+          className="max-w-2xl text-lg sm:text-xl md:text-2xl font-light leading-relaxed text-white/80 mb-10"
         >
           Building{" "}
           <motion.span 
@@ -174,13 +174,13 @@ export default function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.5, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-wrap items-center gap-6 mb-16"
+          className="flex flex-wrap items-center gap-5 mb-12"
         >
           <motion.a
             href="#projects"
             whileHover={{ scale: 1.05, boxShadow: "0 20px 40px rgba(139, 92, 246, 0.4)" }}
             whileTap={{ scale: 0.95 }}
-            className="group relative overflow-hidden rounded-full bg-gradient-to-r from-purple-600 to-cyan-500 px-10 py-5 text-base font-bold text-white transition-all shadow-2xl"
+            className="group relative overflow-hidden rounded-full bg-gradient-to-r from-purple-600 to-cyan-500 px-8 py-4 text-sm font-bold text-white transition-all shadow-2xl"
           >
             <motion.span 
               className="relative z-10 flex items-center gap-2"
@@ -208,7 +208,7 @@ export default function Hero() {
             href="#contact"
             whileHover={{ scale: 1.05, x: 10 }}
             whileTap={{ scale: 0.95 }}
-            className="flex items-center gap-3 text-base font-semibold text-white/80 transition-colors hover:text-white group"
+            className="flex items-center gap-2 text-sm font-semibold text-white/80 transition-colors hover:text-white group"
           >
             <motion.span 
               animate={{ 
@@ -238,7 +238,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.8, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          className="flex items-center gap-12 border-t-2 border-white/20 pt-10"
+          className="flex items-center gap-8 border-t-2 border-white/20 pt-8"
         >
           {[
             { value: "15+", label: "Technologies", color: "from-purple-500 to-pink-500" },
@@ -258,7 +258,7 @@ export default function Hero() {
                   scale: [1, 1.05, 1],
                 }}
                 transition={{ duration: 2, repeat: Infinity, delay: index * 0.3 }}
-                className={`font-heading text-5xl md:text-6xl font-black bg-gradient-to-r ${stat.color} bg-clip-text text-transparent`}
+                className={`font-heading text-4xl md:text-5xl font-black bg-gradient-to-r ${stat.color} bg-clip-text text-transparent`}
               >
                 {stat.value}
               </motion.span>

@@ -42,6 +42,9 @@ function ProjectCard({ p, index }: { p: any; index: number }) {
   
   const scheme = colorSchemes[index % colorSchemes.length];
 
+  // Check if this is the CompressX project
+  const isCompressX = p.title === "CompressX";
+
   return (
     <motion.div
       ref={ref}
@@ -54,6 +57,20 @@ function ProjectCard({ p, index }: { p: any; index: number }) {
       style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
       className={`interactive group relative flex w-full flex-col justify-between overflow-hidden rounded-[1.5rem] border border-white/10 bg-[#03050C]/60 p-6 backdrop-blur-xl min-h-[400px] transition-all duration-300 ${scheme.border} hover:shadow-[0_0_30px_${scheme.glow}]`}
     >
+      {/* CompressX Background Image with 80% opacity */}
+      {isCompressX && (
+        <>
+          <div 
+            className="absolute inset-0 z-0 bg-cover bg-center opacity-20"
+            style={{
+              backgroundImage: "url('/images/compressx-bg.png')",
+            }}
+          />
+          {/* Dark overlay for better text readability */}
+          <div className="absolute inset-0 z-[1] bg-black/40" />
+        </>
+      )}
+
       {/* Dynamic Radial Glow */}
       <motion.div
         className="pointer-events-none absolute inset-0 z-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
@@ -67,7 +84,7 @@ function ProjectCard({ p, index }: { p: any; index: number }) {
         }}
       />
 
-      <div className="relative z-10 flex h-full flex-col justify-between" style={{ transform: "translateZ(20px)" }}>
+      <div className="relative z-20 flex h-full flex-col justify-between" style={{ transform: "translateZ(20px)" }}>
         <div>
           <div className="mb-4 flex items-center justify-between">
             <span
@@ -104,21 +121,23 @@ function ProjectCard({ p, index }: { p: any; index: number }) {
             </ul>
           )}
 
-          {p.link ? (
-            <a
-              href={p.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group/link relative inline-flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-white px-5 py-3 text-xs font-bold text-black transition-transform hover:scale-[1.02]"
-            >
-              <span className="relative z-10">Launch Application</span>
-              <div className="absolute inset-0 z-0 h-full w-full bg-gradient-to-r from-purple-500 to-cyan-500 opacity-0 transition-opacity duration-300 group-hover/link:opacity-10" />
-            </a>
-          ) : (
-            <div className="inline-flex w-full items-center justify-center rounded-xl border border-white/10 bg-white/5 px-5 py-3 text-xs font-bold text-white/40 cursor-default">
-              Under Active Development
-            </div>
-          )}
+          <div className="flex justify-center">
+            {p.link ? (
+              <a
+                href={p.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group/link relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-xl bg-white px-8 py-3 text-xs font-bold text-black transition-transform hover:scale-[1.02]"
+              >
+                <span className="relative z-10">Launch Demo</span>
+                <div className="absolute inset-0 z-0 h-full w-full bg-gradient-to-r from-purple-500 to-cyan-500 opacity-0 transition-opacity duration-300 group-hover/link:opacity-10" />
+              </a>
+            ) : (
+              <div className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/5 px-8 py-3 text-xs font-bold text-white/40 cursor-default">
+                Under Active Development
+              </div>
+            )}
+          </div>
         </div>
       </div>
 

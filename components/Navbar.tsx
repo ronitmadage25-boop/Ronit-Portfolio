@@ -2,17 +2,18 @@
 
 import { useEffect, useState } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
+import { Mic } from "lucide-react";
 
 const links = [
   { label: "Home", href: "#home" },
   { label: "About", href: "#about" },
   { label: "Experience", href: "#experience" },
   { label: "Skills", href: "#skills" },
-  { label: "Projects", href: "#projects" },
+  { label: "Projects", href: "#impact" },
   { label: "Contact", href: "#contact" },
 ];
 
-export default function Navbar() {
+export default function Navbar({ onOpenInterview }: { onOpenInterview?: () => void }) {
   const [active, setActive] = useState("Home");
   const [scrolled, setScrolled] = useState(false);
   const { scrollYProgress } = useScroll();
@@ -90,16 +91,29 @@ export default function Navbar() {
           ))}
         </ul>
 
-        <a
-          href="#contact"
-          onClick={(e) => {
-            e.preventDefault();
-            document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
-          }}
-          className="group relative overflow-hidden rounded-full border border-cyan-500/30 bg-cyan-500/10 px-5 py-2 text-xs font-mono font-bold tracking-widest text-cyan-400 uppercase transition-all hover:bg-cyan-500/20"
-        >
-          <span className="relative z-10">Initiate</span>
-        </a>
+        <div className="flex items-center gap-3">
+          {/* AI Interview Button */}
+          {onOpenInterview && (
+            <button
+              onClick={onOpenInterview}
+              className="group relative overflow-hidden rounded-full border border-purple-500/30 bg-purple-500/10 px-5 py-2 text-xs font-mono font-bold tracking-widest text-purple-400 uppercase transition-all hover:bg-purple-500/20 flex items-center gap-2"
+            >
+              <Mic className="h-3 w-3" />
+              <span className="relative z-10 hidden md:inline">Interview</span>
+            </button>
+          )}
+
+          <a
+            href="#contact"
+            onClick={(e) => {
+              e.preventDefault();
+              document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
+            }}
+            className="group relative overflow-hidden rounded-full border border-cyan-500/30 bg-cyan-500/10 px-5 py-2 text-xs font-mono font-bold tracking-widest text-cyan-400 uppercase transition-all hover:bg-cyan-500/20"
+          >
+            <span className="relative z-10">Initiate</span>
+          </a>
+        </div>
       </div>
 
       {/* Global Scroll Progress Bar */}

@@ -1,0 +1,21 @@
+IMPORTANT: Save the CompressX Background Image Here!
+
+📸 INSTRUCTIONS:
+
+1. Look at the FIRST image you uploaded in our conversation
+   (The one with the compression machine, PNG/JPG/PDF icons, and "70% Smaller Size")
+
+2. Right-click that image and "Save image as..."
+
+3. Save it with this exact name: compressx-bg.png
+
+4. Save location: This folder (public/images/)
+   Full path: C:\Users\RONIT MADAGE\Downloads\ronit-portfolio\portfolio\public\images\compressx-bg.png
+
+5. Refresh your browser at http://localhost:3001
+
+6. Scroll to Projects section
+
+7. You'll see the CompressX card with your beautiful background!
+
+✅ The code is already set up and waiting for the image!

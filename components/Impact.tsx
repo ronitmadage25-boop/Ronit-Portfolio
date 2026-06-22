@@ -61,6 +61,18 @@ function CaseStudyCard({ study }: { study: any }) {
 
   const theme = { border: "hover:border-cyan-500/40", glow: "rgba(6, 182, 212, 0.15)", badge: "bg-cyan-500/10 text-cyan-400 border-cyan-500/20" };
 
+  // Determine background image based on project title
+  const getBackgroundImage = () => {
+    if (study.title === "CompressX") {
+      return "/models/compressx.png";
+    } else if (study.title === "Algoryx Mail AI Detector") {
+      return "/models/algoryx.png";
+    }
+    return null;
+  };
+
+  const backgroundImage = getBackgroundImage();
+
   return (
     <motion.div
       ref={cardRef}
@@ -73,8 +85,24 @@ function CaseStudyCard({ study }: { study: any }) {
       style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
       className={`relative w-full overflow-hidden rounded-[2.5rem] border border-white/10 bg-[#03050C]/60 p-8 md:p-12 backdrop-blur-xl transition-all duration-300 ${theme.border} hover:shadow-[0_0_40px_${theme.glow}]`}
     >
+      {/* Project Background Image */}
+      {backgroundImage && (
+        <>
+          <div 
+            className="absolute inset-0 z-0 bg-cover bg-center opacity-40"
+            style={{
+              backgroundImage: `url('${backgroundImage}')`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
+          />
+          {/* Dark overlay for better text readability */}
+          <div className="absolute inset-0 z-[1] bg-black/50" />
+        </>
+      )}
+
       <motion.div
-        className="pointer-events-none absolute inset-0 z-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        className="pointer-events-none absolute inset-0 z-[2] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
         style={{
           background: useTransform(
             () =>
@@ -145,21 +173,16 @@ function CaseStudyCard({ study }: { study: any }) {
             </div>
           </div>
 
-          <div className="mt-8 pt-6 border-t border-white/5 flex items-center gap-4">
+          <div className="mt-8 pt-6 border-t border-white/5 flex justify-center">
             <a
               href={study.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="group/link flex-1 flex items-center justify-center rounded-xl bg-white px-6 py-3.5 text-xs font-bold text-black transition-all hover:scale-[1.02]"
+              className="group/link flex items-center justify-center rounded-xl bg-white px-8 py-3.5 text-xs font-bold text-black transition-all hover:scale-[1.02]"
             >
               <span>Launch Demo</span>
               <span className="transition-transform group-hover/link:translate-x-1 ml-2">→</span>
             </a>
-            {study.github && (
-              <a href={study.github} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center rounded-xl border border-white/10 bg-white/5 px-6 py-3.5 text-xs font-bold text-white transition-all hover:bg-white/10">
-                GitHub Repo
-              </a>
-            )}
           </div>
         </div>
       </div>
@@ -178,7 +201,6 @@ export default function Impact() {
     challenge: "Optimizing memory allocation in serverless environments during heavy image format conversions.",
     outcome: ["Improved storage efficiency", "Faster image sharing", "Better web performance"],
     link: "https://compressx-phi.vercel.app/",
-    github: "https://github.com/ronitmadage25-boop",
     status: "Live Case Study"
   };
 
@@ -189,8 +211,7 @@ export default function Impact() {
     technology: ["React", "Python", "Machine Learning", "FastAPI", "NLP"],
     challenge: "Training the model to distinguish between legitimate automated emails (like newsletters) and malicious AI-generated phishing attempts with low false positives.",
     outcome: ["Enhanced email security", "Reduced phishing success rates", "Real-time threat analysis"],
-    link: "#",
-    github: "#",
+    link: "https://algoryxmail-ai.netlify.app/",
     status: "Live Case Study"
   };
 

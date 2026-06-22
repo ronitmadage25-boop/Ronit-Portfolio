@@ -14,7 +14,7 @@ export default function Loader({
   useEffect(() => {
     let raf: number;
     let start: number | null = null;
-    const DURATION = 2000; // 2 seconds
+    const DURATION = 300; // 300 milliseconds (0.3 seconds)
 
     const tick = (t: number) => {
       if (start === null) start = t;
@@ -27,8 +27,8 @@ export default function Loader({
       } else {
         setTimeout(() => {
           setDone(true);
-          setTimeout(onComplete, 600);
-        }, 300);
+          setTimeout(onComplete, 400);
+        }, 100);
       }
     };
     raf = requestAnimationFrame(tick);

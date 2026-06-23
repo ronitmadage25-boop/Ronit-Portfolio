@@ -3,8 +3,20 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Mic, MicOff, Volume2, VolumeX, RotateCcw, StopCircle, Send } from 'lucide-react';
-import { useTheme } from '@/contexts/ThemeContext';
 import { matchQuery, generateResponse } from '@/lib/aiKnowledgeBase';
+
+// Cyberpunk theme colors (hardcoded)
+const colors = {
+  primary: "#06B6D4",
+  secondary: "#A855F7",
+  accent: "#EC4899",
+  background: "#03050C",
+  cardBackground: "rgba(3, 5, 12, 0.6)",
+  cardBorder: "rgba(255, 255, 255, 0.1)",
+  text: "#FFFFFF",
+  textSecondary: "rgba(255, 255, 255, 0.8)",
+  textMuted: "rgba(255, 255, 255, 0.6)",
+};
 
 interface Message {
   id: string;
@@ -19,7 +31,6 @@ interface AIInterviewProps {
 }
 
 export default function AIInterview({ isOpen, onClose }: AIInterviewProps) {
-  const { theme } = useTheme();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isListening, setIsListening] = useState(false);
@@ -44,7 +55,7 @@ export default function AIInterview({ isOpen, onClose }: AIInterviewProps) {
       const welcomeMessage: Message = {
         id: Date.now().toString(),
         type: 'ronit',
-        content: "Hello! I'm Ronit's AI Digital Twin. I can answer any questions about my education, projects, technical skills, internship experience, achievements, and career goals. Feel free to ask me anything as if you're interviewing me directly!",
+        content: "Hi, I'm Ronit. I'm currently pursuing Computer Engineering at SPIT, Mumbai, and I'm passionate about building intelligent, AI-powered applications and modern full-stack solutions. Feel free to ask me anything about my education, projects, skills, experience, or career goals. I'm excited to tell you about what I've been working on!",
         timestamp: new Date()
       };
       setMessages([welcomeMessage]);
@@ -54,7 +65,7 @@ export default function AIInterview({ isOpen, onClose }: AIInterviewProps) {
         speakText(welcomeMessage.content);
       }
     }
-  }, [isOpen]);
+  }, [isOpen, isMuted]);
 
   // Initialize speech recognition
   useEffect(() => {
@@ -198,18 +209,11 @@ export default function AIInterview({ isOpen, onClose }: AIInterviewProps) {
     }
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      handleSendMessage();
-    }
-  };
-
   const formatMessage = (content: string) => {
     let formatted = content
-      .replace(/\*\*(.*?)\*\*/g, `<strong class="font-bold" style="color: ${theme.colors.text}">$1</strong>`)
-      .replace(/\*(.*?)\*/g, `<em style="color: ${theme.colors.primary}">$1</em>`)
-      .replace(/\[(.*?)\]\((.*?)\)/g, `<a href="$2" target="_blank" rel="noopener noreferrer" class="underline" style="color: ${theme.colors.primary}">$1</a>`);
+      .replace(/\*\*(.*?)\*\*/g, `<strong class="font-bold" style="color: ${colors.text}">$1</strong>`)
+      .replace(/\*(.*?)\*/g, `<em style="color: ${colors.primary}">$1</em>`)
+      .replace(/\[(.*?)\]\((.*?)\)/g, `<a href="$2" target="_blank" rel="noopener noreferrer" class="underline" style="color: ${colors.primary}">$1</a>`);
     return formatted;
   };
 
@@ -235,25 +239,25 @@ export default function AIInterview({ isOpen, onClose }: AIInterviewProps) {
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
             className="fixed inset-4 md:inset-8 lg:inset-16 z-[90] flex flex-col overflow-hidden rounded-3xl border shadow-2xl"
             style={{
-              borderColor: theme.colors.cardBorder,
-              background: theme.colors.background,
+              borderColor: colors.cardBorder,
+              background: colors.background,
             }}
           >
             {/* Header */}
             <div 
               className="relative border-b px-6 py-5"
               style={{
-                borderColor: theme.colors.cardBorder,
-                background: `linear-gradient(to right, ${theme.colors.primary}15, ${theme.colors.secondary}15)`,
+                borderColor: colors.cardBorder,
+                background: `linear-gradient(to right, ${colors.primary}15, ${colors.secondary}15)`,
               }}
             >
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-2xl font-bold" style={{ color: theme.colors.text }}>
-                    🎤 RONIT DIGITAL TWIN
+                  <h2 className="text-2xl font-bold" style={{ color: colors.text }}>
+                    🎤 TALK WITH RONIT
                   </h2>
-                  <p className="mt-1 text-sm" style={{ color: theme.colors.textMuted }}>
-                    Talk directly with Ronit's AI Twin
+                  <p className="mt-1 text-sm" style={{ color: colors.textMuted }}>
+                    Direct conversation with Ronit
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
@@ -262,9 +266,9 @@ export default function AIInterview({ isOpen, onClose }: AIInterviewProps) {
                     onClick={() => setIsMuted(!isMuted)}
                     className="rounded-lg border p-2 transition-all hover:scale-105"
                     style={{
-                      borderColor: theme.colors.cardBorder,
-                      background: theme.colors.cardBackground,
-                      color: isMuted ? theme.colors.textMuted : theme.colors.primary,
+                      borderColor: colors.cardBorder,
+                      background: colors.cardBackground,
+                      color: isMuted ? colors.textMuted : colors.primary,
                     }}
                     title={isMuted ? 'Unmute' : 'Mute'}
                   >
@@ -276,9 +280,9 @@ export default function AIInterview({ isOpen, onClose }: AIInterviewProps) {
                       onClick={stopSpeaking}
                       className="rounded-lg border p-2 transition-all hover:scale-105"
                       style={{
-                        borderColor: theme.colors.cardBorder,
-                        background: theme.colors.cardBackground,
-                        color: theme.colors.accent,
+                        borderColor: colors.cardBorder,
+                        background: colors.cardBackground,
+                        color: colors.accent,
                       }}
                       title="Stop Speaking"
                     >
@@ -291,9 +295,9 @@ export default function AIInterview({ isOpen, onClose }: AIInterviewProps) {
                     disabled={messages.length <= 1}
                     className="rounded-lg border p-2 transition-all hover:scale-105 disabled:opacity-30"
                     style={{
-                      borderColor: theme.colors.cardBorder,
-                      background: theme.colors.cardBackground,
-                      color: theme.colors.primary,
+                      borderColor: colors.cardBorder,
+                      background: colors.cardBackground,
+                      color: colors.primary,
                     }}
                     title="Replay Last Response"
                   >
@@ -304,9 +308,9 @@ export default function AIInterview({ isOpen, onClose }: AIInterviewProps) {
                     onClick={onClose}
                     className="rounded-lg border p-2 transition-all hover:scale-105"
                     style={{
-                      borderColor: theme.colors.cardBorder,
-                      background: theme.colors.cardBackground,
-                      color: theme.colors.textSecondary,
+                      borderColor: colors.cardBorder,
+                      background: colors.cardBackground,
+                      color: colors.textSecondary,
                     }}
                   >
                     <X className="h-5 w-5" />
@@ -330,9 +334,9 @@ export default function AIInterview({ isOpen, onClose }: AIInterviewProps) {
                       <div 
                         className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border text-lg font-bold"
                         style={{
-                          borderColor: theme.colors.primary,
-                          background: `${theme.colors.primary}20`,
-                          color: theme.colors.primary,
+                          borderColor: colors.primary,
+                          background: `${colors.primary}20`,
+                          color: colors.primary,
                         }}
                       >
                         R
@@ -342,11 +346,11 @@ export default function AIInterview({ isOpen, onClose }: AIInterviewProps) {
                       className="rounded-2xl px-5 py-4"
                       style={{
                         background: message.type === 'interviewer'
-                          ? `linear-gradient(to right, ${theme.colors.primary}, ${theme.colors.secondary})`
-                          : theme.colors.cardBackground,
-                        borderColor: message.type === 'ronit' ? theme.colors.cardBorder : 'transparent',
+                          ? `linear-gradient(to right, ${colors.primary}, ${colors.secondary})`
+                          : colors.cardBackground,
+                        borderColor: message.type === 'ronit' ? colors.cardBorder : 'transparent',
                         border: message.type === 'ronit' ? '1px solid' : 'none',
-                        color: theme.colors.text,
+                        color: colors.text,
                       }}
                     >
                       <div
@@ -369,9 +373,9 @@ export default function AIInterview({ isOpen, onClose }: AIInterviewProps) {
                     <div 
                       className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border text-lg font-bold"
                       style={{
-                        borderColor: theme.colors.primary,
-                        background: `${theme.colors.primary}20`,
-                        color: theme.colors.primary,
+                        borderColor: colors.primary,
+                        background: `${colors.primary}20`,
+                        color: colors.primary,
                       }}
                     >
                       R
@@ -379,16 +383,16 @@ export default function AIInterview({ isOpen, onClose }: AIInterviewProps) {
                     <div 
                       className="flex items-center gap-2 rounded-2xl border px-5 py-4"
                       style={{
-                        borderColor: theme.colors.cardBorder,
-                        background: theme.colors.cardBackground,
+                        borderColor: colors.cardBorder,
+                        background: colors.cardBackground,
                       }}
                     >
                       <div className="flex gap-1">
-                        <div className="h-2 w-2 animate-bounce rounded-full" style={{ background: theme.colors.primary, animationDelay: '0ms' }} />
-                        <div className="h-2 w-2 animate-bounce rounded-full" style={{ background: theme.colors.primary, animationDelay: '150ms' }} />
-                        <div className="h-2 w-2 animate-bounce rounded-full" style={{ background: theme.colors.primary, animationDelay: '300ms' }} />
+                        <div className="h-2 w-2 animate-bounce rounded-full" style={{ background: colors.primary, animationDelay: '0ms' }} />
+                        <div className="h-2 w-2 animate-bounce rounded-full" style={{ background: colors.primary, animationDelay: '150ms' }} />
+                        <div className="h-2 w-2 animate-bounce rounded-full" style={{ background: colors.primary, animationDelay: '300ms' }} />
                       </div>
-                      <span className="text-xs" style={{ color: theme.colors.textMuted }}>
+                      <span className="text-xs" style={{ color: colors.textMuted }}>
                         Thinking...
                       </span>
                     </div>
@@ -406,17 +410,17 @@ export default function AIInterview({ isOpen, onClose }: AIInterviewProps) {
                   <div 
                     className="flex items-center gap-3 rounded-full border px-6 py-3"
                     style={{
-                      borderColor: theme.colors.primary,
-                      background: `${theme.colors.primary}10`,
+                      borderColor: colors.primary,
+                      background: `${colors.primary}10`,
                     }}
                   >
                     <motion.div
                       animate={{ scale: [1, 1.2, 1] }}
                       transition={{ duration: 1.5, repeat: Infinity }}
                     >
-                      <Mic className="h-5 w-5" style={{ color: theme.colors.primary }} />
+                      <Mic className="h-5 w-5" style={{ color: colors.primary }} />
                     </motion.div>
-                    <span className="text-sm font-medium" style={{ color: theme.colors.primary }}>
+                    <span className="text-sm font-medium" style={{ color: colors.primary }}>
                       Listening...
                     </span>
                   </div>
@@ -430,8 +434,8 @@ export default function AIInterview({ isOpen, onClose }: AIInterviewProps) {
             <div 
               className="border-t p-6"
               style={{
-                borderColor: theme.colors.cardBorder,
-                background: theme.colors.cardBackground,
+                borderColor: colors.cardBorder,
+                background: colors.cardBackground,
               }}
             >
               <div className="flex gap-3">
@@ -442,8 +446,8 @@ export default function AIInterview({ isOpen, onClose }: AIInterviewProps) {
                   className="rounded-xl p-4 transition-all hover:scale-105 disabled:opacity-50"
                   style={{
                     background: isListening 
-                      ? `linear-gradient(to right, ${theme.colors.accent}, ${theme.colors.secondary})`
-                      : `linear-gradient(to right, ${theme.colors.primary}, ${theme.colors.secondary})`,
+                      ? `linear-gradient(to right, ${colors.accent}, ${colors.secondary})`
+                      : `linear-gradient(to right, ${colors.primary}, ${colors.secondary})`,
                   }}
                 >
                   {isListening ? (
@@ -458,22 +462,27 @@ export default function AIInterview({ isOpen, onClose }: AIInterviewProps) {
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  onKeyPress={handleKeyPress}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                      e.preventDefault();
+                      handleSendMessage();
+                    }
+                  }}
                   placeholder="Ask me anything..."
                   disabled={isListening || isThinking}
                   className="flex-1 rounded-xl border px-5 py-4 text-sm focus:outline-none focus:ring-2 disabled:opacity-50"
                   style={{
-                    borderColor: theme.colors.cardBorder,
-                    background: theme.colors.background,
-                    color: theme.colors.text,
+                    borderColor: colors.cardBorder,
+                    background: colors.background,
+                    color: colors.text,
                   }}
                   onFocus={(e) => {
-                    e.target.style.borderColor = theme.colors.primary;
-                    e.target.style.boxShadow = `0 0 0 2px ${theme.colors.primary}20`;
+                    e.currentTarget.style.borderColor = colors.primary;
+                    e.currentTarget.style.boxShadow = `0 0 0 2px ${colors.primary}20`;
                   }}
                   onBlur={(e) => {
-                    e.target.style.borderColor = theme.colors.cardBorder;
-                    e.target.style.boxShadow = 'none';
+                    e.currentTarget.style.borderColor = colors.cardBorder;
+                    e.currentTarget.style.boxShadow = 'none';
                   }}
                 />
 
@@ -483,7 +492,7 @@ export default function AIInterview({ isOpen, onClose }: AIInterviewProps) {
                   disabled={!input.trim() || isThinking || isListening}
                   className="rounded-xl p-4 transition-all hover:scale-105 disabled:opacity-50"
                   style={{
-                    background: `linear-gradient(to right, ${theme.colors.primary}, ${theme.colors.secondary})`,
+                    background: `linear-gradient(to right, ${colors.primary}, ${colors.secondary})`,
                   }}
                 >
                   <Send className="h-5 w-5 text-white" />
@@ -499,17 +508,17 @@ export default function AIInterview({ isOpen, onClose }: AIInterviewProps) {
                     disabled={isThinking || isListening}
                     className="rounded-lg border px-3 py-1.5 text-xs transition-all hover:scale-105 disabled:opacity-50"
                     style={{
-                      borderColor: theme.colors.cardBorder,
-                      background: theme.colors.background,
-                      color: theme.colors.textSecondary,
+                      borderColor: colors.cardBorder,
+                      background: colors.background,
+                      color: colors.textSecondary,
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.borderColor = theme.colors.primary;
-                      e.currentTarget.style.color = theme.colors.primary;
+                      e.currentTarget.style.borderColor = colors.primary;
+                      e.currentTarget.style.color = colors.primary;
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.borderColor = theme.colors.cardBorder;
-                      e.currentTarget.style.color = theme.colors.textSecondary;
+                      e.currentTarget.style.borderColor = colors.cardBorder;
+                      e.currentTarget.style.color = colors.textSecondary;
                     }}
                   >
                     {question}

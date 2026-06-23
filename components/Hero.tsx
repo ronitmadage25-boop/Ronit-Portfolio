@@ -11,7 +11,7 @@ interface Particle {
   delay: number;
 }
 
-export default function Hero() {
+export default function Hero({ onOpenInterview }: { onOpenInterview?: () => void }) {
   const [particles, setParticles] = useState<Particle[]>([]);
 
   useEffect(() => {
@@ -203,6 +203,31 @@ export default function Hero() {
               transition={{ duration: 3, repeat: Infinity }}
             />
           </motion.a>
+
+          {/* AI Interview Button */}
+          {onOpenInterview && (
+            <motion.button
+              onClick={onOpenInterview}
+              whileHover={{ scale: 1.05, boxShadow: "0 20px 40px rgba(168, 85, 247, 0.4)" }}
+              whileTap={{ scale: 0.95 }}
+              className="group relative overflow-hidden rounded-full bg-gradient-to-r from-purple-500 to-pink-500 px-8 py-4 text-sm font-bold text-white transition-all shadow-2xl flex items-center gap-2"
+            >
+              <motion.span 
+                className="relative z-10"
+                animate={{ x: [0, 5, 0] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                🎤 Interview Ronit
+              </motion.span>
+              <motion.div 
+                className="absolute inset-0 bg-gradient-to-r from-pink-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                animate={{ 
+                  backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] 
+                }}
+                transition={{ duration: 3, repeat: Infinity }}
+              />
+            </motion.button>
+          )}
           
           <motion.a
             href="#contact"

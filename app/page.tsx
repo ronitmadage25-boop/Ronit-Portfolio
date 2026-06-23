@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { ThemeProvider } from "@/contexts/ThemeContext";
 import Loader from "@/components/Loader";
 import SmoothScroll from "@/components/SmoothScroll";
 import Navbar from "@/components/Navbar";
@@ -12,7 +11,6 @@ import Skills from "@/components/Skills";
 import Impact from "@/components/Impact";
 import Contact from "@/components/Contact";
 import RonitAI from "@/components/RonitAI";
-import ThemeSwitcher from "@/components/ThemeSwitcher";
 import AIInterview from "@/components/AIInterview";
 
 export default function Home() {
@@ -20,12 +18,11 @@ export default function Home() {
   const [isInterviewOpen, setIsInterviewOpen] = useState(false);
 
   return (
-    <ThemeProvider>
+    <>
       <Loader onComplete={() => setLoaded(true)} />
       <SmoothScroll>
         <div style={{ visibility: loaded ? "visible" : "hidden" }}>
           <Navbar onOpenInterview={() => setIsInterviewOpen(true)} />
-          <ThemeSwitcher />
           <main id="smooth-content" className="relative z-10">
             <Hero onOpenInterview={() => setIsInterviewOpen(true)} />
             <About />
@@ -38,6 +35,6 @@ export default function Home() {
           <AIInterview isOpen={isInterviewOpen} onClose={() => setIsInterviewOpen(false)} />
         </div>
       </SmoothScroll>
-    </ThemeProvider>
+    </>
   );
 }

@@ -271,6 +271,28 @@ export const applyThemeToCSSVariables = (theme: Theme): void => {
   root.style.setProperty('--font-heading-weight', theme.typography.headingWeight);
   root.style.setProperty('--font-body-weight', theme.typography.bodyWeight);
   
-  // Apply background gradient
+  // Apply background gradient to document
+  document.documentElement.style.background = theme.colors.backgroundGradient;
   document.body.style.background = theme.colors.backgroundGradient;
+  
+  // Update scrollbar colors
+  const style = document.createElement('style');
+  style.innerHTML = `
+    ::-webkit-scrollbar-track {
+      background: ${theme.colors.background};
+    }
+    ::-webkit-scrollbar-thumb {
+      background: ${theme.colors.primary};
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: ${theme.colors.secondary};
+    }
+  `;
+  
+  // Remove old style if it exists
+  const oldStyle = document.getElementById('theme-scrollbar-style');
+  if (oldStyle) oldStyle.remove();
+  
+  style.id = 'theme-scrollbar-style';
+  document.head.appendChild(style);
 };
